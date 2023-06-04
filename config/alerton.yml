@@ -1,0 +1,16 @@
+---
+check_interval: 2s
+cooldown_duration: 60m
+telegram_token: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+telegram_chatid: 123456789
+alerts:
+- name: Test alert
+  command: scripts/test.sh
+  params:
+    - Hello
+    - World
+    - hasjk
+- name: Test alert 2
+  command: scripts/test.sh
+  params:
+    - OK
