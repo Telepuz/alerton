@@ -13,10 +13,10 @@ type Script struct {
 	Params  []string
 }
 
-func New(conf *config.Alert) (*Script, error) {
+func New(conf *config.Alert, scriptDir string) (*Script, error) {
 	return &Script{
 			Name:    conf.Name,
-			Command: conf.Command,
+			Command: scriptDir + "/" + conf.Command,
 			Params:  conf.Params,
 		},
 		nil

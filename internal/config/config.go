@@ -12,8 +12,9 @@ type Config struct {
 	Hostname         string        `yaml:"hostname"`
 	CheckInterval    time.Duration `yaml:"check_interval"`
 	CooldownDuration time.Duration `yaml:"cooldown_duration"`
+	AlertTimeout     time.Duration `yaml:"alert_timeout"`
 	TelegramToken    string        `yaml:"telegram_token"`
-	TelegramChatid   string        `yaml:"telegram_chatid"`
+	TelegramChatid   int64         `yaml:"telegram_chatid"`
 	Alerts           []Alert       `yaml:"alerts"`
 }
 
@@ -24,7 +25,7 @@ type Alert struct {
 	Params  []string `yaml:"params"`
 }
 
-func NewConfig() (*Config, error) {
+func NewConfig(configFile string) (*Config, error) {
 	host, err := os.Hostname()
 	if err != nil {
 		return nil, fmt.Errorf("hostname error: %w", err)
@@ -32,7 +33,7 @@ func NewConfig() (*Config, error) {
 	cfg := &Config{
 		Hostname: host,
 	}
-	err = cleanenv.ReadConfig("./config/alerton.yml", cfg)
+	err = cleanenv.ReadConfig(configFile, cfg)
 	if err != nil {
 		return nil, fmt.Errorf("config error: %w", err)
 	}

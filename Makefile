@@ -2,10 +2,11 @@ export
 
 LOCAL_BIN:=$(CURDIR)/bin
 PATH:=$(LOCAL_BIN):$(PATH)
+APP_NAME:="alerton"
+VERSION:="0.0.1"
+ARCH:="amd64"
+BUILD_DIR:=$(APP_NAME)_$(VERSION)_$(ARCH)
 
-# HELP =================================================================================================================
-# This will output the help for each task
-# thanks to https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
 .PHONY: help
 
 help: ## Display this help screen
@@ -13,11 +14,36 @@ help: ## Display this help screen
 
 run: ### run app
 	go mod tidy && go mod download && \
-	go run ./cmd/app
+	go run ./cmd/app -scripts_dir=./scripts -config_file=./config/alerton.yml
 .PHONY: run
 
 build: ### build app
-	go build -v ./cmd/app
+	mkdir -p $(BUILD_DIR)/usr/local/bin
+	mkdir -p $(BUILD_DIR)/etc/alerton
+	mkdir -p $(BUILD_DIR)/lib/systemd/system
+	go build -o $(BUILD_DIR)/usr/local/bin/alerton -v ./cmd/app
+	cp -r ./scripts $(BUILD_DIR)/etc/alerton
+	cp ./config/alerton.yml $(BUILD_DIR)/etc/alerton
+	cp ./config/alerton.service $(BUILD_DIR)/lib/systemd/system
+
+deb-package: build ### build debian package
+	mkdir -p $(BUILD_DIR)/DEBIAN
+	cp -r ./DEBIAN/* $(BUILD_DIR)/DEBIAN
+	sed -i "s/<VERSION>/$(VERSION)/g" $(BUILD_DIR)/DEBIAN/control
+	sed -i "s/<ARCH>/$(ARCH)/g" $(BUILD_DIR)/DEBIAN/control
+	dpkg-deb --build --root-owner-group $(BUILD_DIR)
+
+install: build ### build and install app
+	cp -r $(BUILD_DIR)/etc/alerton /etc/
+	cp $(BUILD_DIR)/lib/systemd/system /lib/systemd/system
+
+uninstall: ### uninstall app
+	rm -rf /etc/alerton
+	rm -f /lib/systemd/system/alerton.service
+
+clean: ### delete temp files
+	rm -rf $(BUILD_DIR)
+	rm -f $(BUILD_DIR).deb
 
 linter-golangci: ### check by golangci linter
 	golangci-lint run

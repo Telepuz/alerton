@@ -12,6 +12,8 @@
 *.so
 *.dylib
 bin/
+alerton_*/
+alerton_*.deb
 
 # Test binary, built with `go test -c`
 *.test

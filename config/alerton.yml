@@ -1,16 +1,17 @@
 ---
-check_interval: 2s
+check_interval: 15m
 cooldown_duration: 60m
-telegram_token: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+alert_timeout: 60s
+telegram_token: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 telegram_chatid: 123456789
 alerts:
-- name: Test alert
-  command: scripts/test.sh
+- name: Ping google.com
+  command: pingHost.sh
   params:
-    - Hello
-    - World
-    - hasjk
-- name: Test alert 2
-  command: scripts/test.sh
+    - google.com
+- name: Resolve DNS-name google.com
+  command: dnsCheck.sh
   params:
-    - OK
+    - google.com
+- name: Check free disk space
+  command: diskFreeSpace.sh

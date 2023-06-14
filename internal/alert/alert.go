@@ -10,12 +10,12 @@ type Alert interface {
 	Run() (bool, string, error)
 }
 
-func NewAlerts(configs *[]config.Alert) ([]Alert, error) {
+func NewAlerts(configs *[]config.Alert, scriptDir string) ([]Alert, error) {
 	alerts := []Alert{}
 	for _, alertConfig := range *configs {
 		switch alertConfig.Type {
 		default:
-			alert, err := script.New(&alertConfig)
+			alert, err := script.New(&alertConfig, scriptDir)
 			if err != nil {
 				return nil, err
 			}
