@@ -1,0 +1,8 @@
+Package: alerton
+Version: <VERSION>
+Architecture: <ARCH>
+Homepage: https://github.com/telepuz/alerton
+Maintainer: Alex Belov <t7k312@gmail.com>
+Description: A simple alerting daemon
+Section: unknown
+Priority: optional
