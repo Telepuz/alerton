@@ -1,0 +1,17 @@
+[Unit]
+Description=A simple alerting daemon
+After=network.target
+Documentation=https://github.com/telepuz/alerton
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/alerton
+PIDFile=/run/alerton/alerton.pid
+TimeoutStopSec=0
+Restart=always
+RuntimeDirectory=alerton
+RuntimeDirectoryMode=2755
+UMask=007
+
+[Install]
+WantedBy=multi-user.target

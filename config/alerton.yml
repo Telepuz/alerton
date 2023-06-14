@@ -1,0 +1,17 @@
+---
+check_interval: 15m
+cooldown_duration: 60m
+alert_timeout: 60s
+telegram_token: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+telegram_chatid: 123456789
+alerts:
+- name: Ping google.com
+  command: pingHost.sh
+  params:
+    - google.com
+- name: Resolve DNS-name google.com
+  command: dnsCheck.sh
+  params:
+    - google.com
+- name: Check free disk space
+  command: diskFreeSpace.sh
