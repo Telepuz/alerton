@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# Check free disk space
+# Check free disk inodes
 #
-ALERT=90
+ALERT=80
 EXCLUDE_LIST="$1"
-IGNORE_FS="Filesystem\|tmpfs\|udev"
+IGNORE_FS="Filesystem\|efi"
 
 function ok {
     echo "OK"
@@ -19,9 +19,9 @@ function alertMessage {
 
 function getDiskUsedSpace {
     if [ "$EXCLUDE_LIST" != "" ] ; then
-        df -h 2>/dev/null | grep -v "$IGNORE_FS\|$EXCLUDE_LIST" | awk '{print $1, $5}'
+        df -i 2>/dev/null | grep -v "$IGNORE_FS\|$EXCLUDE_LIST" | awk '{print $1, $5}'
     else
-        df -h 2>/dev/null | grep -v "$IGNORE_FS" | awk '{print $1, $5}'
+        df -i 2>/dev/null | grep -v "$IGNORE_FS" | awk '{print $1, $5}'
     fi
 }
 

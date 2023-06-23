@@ -5,24 +5,24 @@
 TRIES=5
 TIMEOUT=3
 
-function ok() {
+function ok {
     echo "OK"
     exit 0
 }
 
-function alertMessage() {
+function alertMessage {
     HOST="$1"
     echo "Host $HOST is unreacheble"
     exit 0
 }
 
-function pingHost() {
+function pingHost {
     HOST="$1"
     ping -c 1 "$HOST" > /dev/null 2>&1
     return "$?"
 }
 
-function main() {
+function main {
     HOST="$1"
     for i in $(seq 1 $TRIES); do
         pingHost "$HOST" && ok || sleep $TIMEOUT
