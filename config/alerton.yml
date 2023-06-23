@@ -15,3 +15,11 @@ alerts:
     - google.com
 - name: Check free disk space
   command: diskFreeSpace.sh
+- name: Check systemd units
+  command: systemdFailedUnits.sh
+- name: Check uptime
+  command: hostRestarts.sh
+- name: Check free inodes on disks
+  command: diskFreeInodes.sh
+- name: Check free memory
+  command: memAvailable.sh
