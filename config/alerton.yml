@@ -23,3 +23,5 @@ alerts:
   command: diskFreeInodes.sh
 - name: Check free memory
   command: memAvailable.sh
+- name: Check faillock users
+  command: faillockUser.sh
