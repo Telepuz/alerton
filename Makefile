@@ -3,7 +3,7 @@ export
 LOCAL_BIN:=$(CURDIR)/bin
 PATH:=$(LOCAL_BIN):$(PATH)
 APP_NAME:="alerton"
-VERSION:="0.0.2"
+VERSION:="0.0.3"
 ARCH:="amd64"
 BUILD_DIR:=$(APP_NAME)_$(VERSION)_$(ARCH)
 
@@ -21,7 +21,7 @@ build: ### build app
 	mkdir -p $(BUILD_DIR)/usr/local/bin
 	mkdir -p $(BUILD_DIR)/etc/alerton
 	mkdir -p $(BUILD_DIR)/lib/systemd/system
-	go build -o $(BUILD_DIR)/usr/local/bin/alerton -v ./cmd/app
+	go build -ldflags "-s -w" -o $(BUILD_DIR)/usr/local/bin/alerton -v ./cmd/app
 	cp -r ./scripts $(BUILD_DIR)/etc/alerton
 	cp ./config/alerton.yml $(BUILD_DIR)/etc/alerton
 	cp ./config/alerton.service $(BUILD_DIR)/lib/systemd/system
