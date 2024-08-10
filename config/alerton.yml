@@ -6,22 +6,24 @@ telegram_token: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 telegram_chatid: 123456789
 alerts:
 - name: Ping google.com
-  command: pingHost.sh
+  command: netPingHost.sh
   params:
     - google.com
 - name: Resolve DNS-name google.com
-  command: dnsCheck.sh
+  command: netDnsCheck.sh
   params:
     - google.com
 - name: Check free disk space
-  command: diskFreeSpace.sh
+  command: osDiskFreeSpace.sh
 - name: Check systemd units
-  command: systemdFailedUnits.sh
+  command: osSystemdFailedUnits.sh
 - name: Check uptime
-  command: hostRestarts.sh
+  command: osHostRestarts.sh
 - name: Check free inodes on disks
-  command: diskFreeInodes.sh
+  command: osDiskFreeInodes.sh
 - name: Check free memory
-  command: memAvailable.sh
+  command: osMemAvailable.sh
 - name: Check faillock users
-  command: faillockUser.sh
+  command: osFaillockUser.sh
+- name: Check running processes count
+  command: osProcessesCount.sh
