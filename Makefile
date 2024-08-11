@@ -21,7 +21,7 @@ build: ### build app
 	mkdir -p $(BUILD_DIR)/usr/local/bin
 	mkdir -p $(BUILD_DIR)/etc/alerton
 	mkdir -p $(BUILD_DIR)/lib/systemd/system
-	go build -ldflags "-s -w" -o $(BUILD_DIR)/usr/local/bin/alerton -v ./cmd/app
+	CGO_ENABLED=0 go build -ldflags "-s -w" -o $(BUILD_DIR)/usr/local/bin/alerton -v ./cmd/app
 	cp -r ./scripts $(BUILD_DIR)/etc/alerton
 	cp ./config/alerton.yml $(BUILD_DIR)/etc/alerton
 	cp ./config/alerton.service $(BUILD_DIR)/lib/systemd/system
