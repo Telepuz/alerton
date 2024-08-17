@@ -16,7 +16,7 @@ function alertMessage {
 
 function main {
     HOST="$1"
-    if [ -z "$(ls -A /var/log/faillock)" ]; then
+    if [ -z "$(ls -A /var/lib/faillock)" ]; then
         ok
     fi
     alertMessage "$HOST"
