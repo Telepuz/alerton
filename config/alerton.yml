@@ -27,3 +27,7 @@ alerts:
   command: osFaillockUser.sh
 - name: Check running processes count
   command: osProcessesCount.sh
+- name: Check OOM killed processes
+  command: osOOMKilledProcesses.sh
+- name: Check OOM killed processes
+  command: osNewLogins.sh

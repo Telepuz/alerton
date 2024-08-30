@@ -45,16 +45,6 @@ func (t *Telegram) NewMessage(title, hostname, body string) *Message {
 	}
 }
 
-func (t *Telegram) SendMessage2(title, hostname, body string) error {
-	log.Printf(
-		"*%s*\n\n*Host: %s*\n%s\n",
-		title,
-		hostname,
-		body,
-	)
-	return nil
-}
-
 func (t *Telegram) SendMessage(title, hostname, body string) error {
 	message := t.NewMessage(title, hostname, body)
 	payload, err := json.Marshal(message)
