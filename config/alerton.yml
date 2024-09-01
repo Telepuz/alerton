@@ -29,5 +29,5 @@ alerts:
   command: osProcessesCount.sh
 - name: Check OOM killed processes
   command: osOOMKilledProcesses.sh
-- name: Check OOM killed processes
+- name: Check new logins
   command: osNewLogins.sh
