@@ -1,6 +1,8 @@
 package script
 
 import (
+	"fmt"
+	"log/slog"
 	"os/exec"
 	"strings"
 
@@ -37,6 +39,6 @@ func (s *Script) Run() (bool, string, error) {
 	if strings.ToUpper(out) != "OK\n" {
 		isTriggered = true
 	}
-
+	slog.Debug(fmt.Sprintf("Run(): Ran script: %s - %s", s.Name, out))
 	return isTriggered, out, nil
 }

@@ -16,7 +16,7 @@ function alertMessage {
 }
 
 function checkLastLogins {
-    last --since="$(date +'%Y-%m-%d %H:%M' -d '1 min ago')" | grep -v "wtmp begins"
+    last --since="$(date +'%Y-%m-%d %H:%M' -d '16 min ago')" | grep -v "wtmp begins"
 }
 
 function main {

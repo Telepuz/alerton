@@ -1,7 +1,8 @@
 package app
 
 import (
-	"log"
+	"fmt"
+	"log/slog"
 	"time"
 
 	"github.com/telepuz/alerton/internal/alert"
@@ -20,11 +21,16 @@ type AppContext struct {
 func Run(c *AppContext) {
 	for {
 		c.Storage.ClearByTTL()
+
 		for _, alert := range c.Alerts {
 			alertName := alert.GetName()
 			isTriggered, body, err := alert.Run()
 			if err != nil {
-				log.Printf("Alert.Run(): %s - %s", alertName, err)
+				slog.Error(fmt.Sprintf(
+					"Run() Alert Run: %s - %s",
+					alertName,
+					err,
+				))
 			}
 			if isTriggered && c.Storage.IsCooldown(alertName) {
 				err = c.Messenger.SendMessage(
@@ -33,10 +39,19 @@ func Run(c *AppContext) {
 					body,
 				)
 				if err != nil {
-					log.Printf("Messenger.SendMessage(): %s - %s", alertName, err)
+					slog.Error(fmt.Sprintf(
+						"Run(): Messenger.SendMessage(): %s - %s",
+						alertName,
+						err,
+					))
 				}
 			}
 		}
+
+		slog.Debug(fmt.Sprintf(
+			"Run(): Sleeping for %s",
+			c.Config.CheckInterval,
+		))
 		time.Sleep(c.Config.CheckInterval)
 	}
 }

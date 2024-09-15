@@ -32,6 +32,12 @@ check_interval: 15m
 cooldown_duration: 60m
 # Script's timeout
 alert_timeout: 60s
+# Logs settings
+logger:
+  # Available values: plaintext, json
+  format: plaintext
+  # Available values: debug, info, warn, error
+  level: info
 # Credentials for telegram
 telegram_token: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 telegram_chatid: XXXXXXXXXXXXXXXXXXXX

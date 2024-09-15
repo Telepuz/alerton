@@ -3,7 +3,7 @@ export
 LOCAL_BIN:=$(CURDIR)/bin
 PATH:=$(LOCAL_BIN):$(PATH)
 APP_NAME:="alerton"
-VERSION:="0.0.7"
+VERSION:="0.0.8"
 ARCH:="amd64"
 BUILD_DIR:=$(APP_NAME)_$(VERSION)_$(ARCH)
 
@@ -46,5 +46,5 @@ clean: ### delete temp files
 	rm -f $(BUILD_DIR).deb
 
 linter-golangci: ### check by golangci linter
-	golangci-lint run
+	golangci-lint -v run
 .PHONY: linter-golangci

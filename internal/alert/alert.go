@@ -1,6 +1,9 @@
 package alert
 
 import (
+	"fmt"
+	"log/slog"
+
 	"github.com/telepuz/alerton/internal/alert/script"
 	"github.com/telepuz/alerton/internal/config"
 )
@@ -13,6 +16,7 @@ type Alert interface {
 func NewAlerts(configs *[]config.Alert, scriptDir string) ([]Alert, error) {
 	alerts := []Alert{}
 	for _, alertConfig := range *configs {
+		slog.Debug(fmt.Sprintf("NewAlerts(): Got new alert: %s", alertConfig.Name))
 		switch alertConfig.Type {
 		default:
 			alert, err := script.New(&alertConfig, scriptDir)
@@ -22,5 +26,6 @@ func NewAlerts(configs *[]config.Alert, scriptDir string) ([]Alert, error) {
 			alerts = append(alerts, alert)
 		}
 	}
+	slog.Debug(fmt.Sprintf("NewAlerts(): Return alerts: %s", alerts))
 	return alerts, nil
 }

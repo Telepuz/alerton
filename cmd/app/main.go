@@ -2,11 +2,14 @@ package main
 
 import (
 	"flag"
-	"log"
+	"fmt"
+	"log/slog"
+	"os"
 
 	"github.com/telepuz/alerton/internal/alert"
 	"github.com/telepuz/alerton/internal/app"
 	config "github.com/telepuz/alerton/internal/config"
+	"github.com/telepuz/alerton/internal/logger"
 	"github.com/telepuz/alerton/internal/messenger/telegram"
 	"github.com/telepuz/alerton/internal/storage/memory"
 )
@@ -26,20 +29,39 @@ func main() {
 
 	cfg, err := config.NewConfig(*configFile)
 	if err != nil {
-		log.Fatal(err)
+		slog.Error(
+			fmt.Sprintf("main(): %s", err))
+		os.Exit(1)
 	}
+	slog.Debug("main(): Read config file")
+
+	err = logger.ConfigureSlog(&cfg.Logger)
+	if err != nil {
+		slog.Error(
+			fmt.Sprintf("main(): %s", err))
+		os.Exit(1)
+	}
+	slog.Debug("main(): Configured slog")
+	slog.Debug(fmt.Sprintf("main(): Read configs: %+v", cfg))
 
 	alerts, err := alert.NewAlerts(&cfg.Alerts, *scriptsDir)
 	if err != nil {
-		log.Fatal(err)
+		slog.Error(
+			fmt.Sprintf("main(): %s", err))
+		os.Exit(1)
 	}
+	slog.Debug("main(): Created alerts")
 
 	msg, err := telegram.NewTelegram(cfg.TelegramToken, cfg.TelegramChatid)
 	if err != nil {
-		log.Fatal(err)
+		slog.Error(
+			fmt.Sprintf("main(): %s", err))
+		os.Exit(1)
 	}
+	slog.Debug("main(): Created new messanger")
 
 	storage := memory.NewMemoryStorage(cfg.CooldownDuration)
+	slog.Debug("main(): Created storage")
 
 	appContext := app.AppContext{
 		Config:    cfg,
@@ -47,5 +69,8 @@ func main() {
 		Alerts:    alerts,
 		Storage:   storage,
 	}
+
+	slog.Info("main(): Starting app...")
 	app.Run(&appContext)
+	slog.Info("main(): Exit...")
 }

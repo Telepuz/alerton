@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
+	"log/slog"
 	"net/http"
 )
 
@@ -23,6 +23,11 @@ type Message struct {
 }
 
 func NewTelegram(token string, chatID int64) (*Telegram, error) {
+	slog.Debug(fmt.Sprintf(
+		"NewTelegram(): Created new telegram-messenger: Token - %s, ChatID - %d",
+		token,
+		chatID,
+	))
 	return &Telegram{
 			Token:  token,
 			ChatID: chatID,
@@ -31,6 +36,11 @@ func NewTelegram(token string, chatID int64) (*Telegram, error) {
 }
 
 func (t *Telegram) NewMessage(title, hostname, body string) *Message {
+	slog.Debug(fmt.Sprintf(
+		"NewMessage(): Created new telegram-messange: title - %s, Body - %s",
+		title,
+		body,
+	))
 	return &Message{
 		ChatID:              t.ChatID,
 		ParseMode:           "Markdown",
@@ -62,14 +72,21 @@ func (t *Telegram) SendMessage(title, hostname, body string) error {
 	if err != nil {
 		return err
 	}
+	slog.Debug(fmt.Sprintf(
+		"SendMessage(): Request complete: Code - %d",
+		response.StatusCode,
+	))
 	defer func(body io.ReadCloser) {
 		if err := body.Close(); err != nil {
-			log.Println("failed to close response body")
+			slog.Warn("failed to close response body")
 		}
 	}(response.Body)
 	if response.StatusCode != http.StatusOK {
 		return fmt.Errorf("failed to send successful request. Status was %q", response.Status)
 	}
-	log.Printf("SendMessage(): %s\n", title)
+	slog.Info(fmt.Sprintf(
+		"SendMessage(): %s",
+		title,
+	))
 	return nil
 }

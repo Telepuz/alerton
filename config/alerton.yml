@@ -4,6 +4,9 @@ cooldown_duration: 60m
 alert_timeout: 60s
 telegram_token: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 telegram_chatid: 123456789
+logger:
+  format: plaintext
+  level: info
 alerts:
 - name: Ping google.com
   command: netPingHost.sh
