@@ -1,9 +1,12 @@
 ---
 check_interval: 15m
-cooldown_duration: 60m
-alert_timeout: 60s
-telegram_token: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-telegram_chatid: 123456789
+messenger:
+  type: telegram
+  token: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+  chatid: 123456789
+storage:
+  type: memory
+  cooldown_duration: 60m
 logger:
   format: plaintext
   level: info

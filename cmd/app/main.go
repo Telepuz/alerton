@@ -52,7 +52,7 @@ func main() {
 	}
 	slog.Debug("main(): Created alerts")
 
-	msg, err := telegram.NewTelegram(cfg.TelegramToken, cfg.TelegramChatid)
+	msg, err := telegram.NewTelegram(&cfg.Messenger)
 	if err != nil {
 		slog.Error(
 			fmt.Sprintf("main(): %s", err))
@@ -60,7 +60,7 @@ func main() {
 	}
 	slog.Debug("main(): Created new messanger")
 
-	storage := memory.NewMemoryStorage(cfg.CooldownDuration)
+	storage := memory.NewMemoryStorage(&cfg.Storage)
 	slog.Debug("main(): Created storage")
 
 	appContext := app.AppContext{

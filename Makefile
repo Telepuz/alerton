@@ -3,7 +3,7 @@ export
 LOCAL_BIN:=$(CURDIR)/bin
 PATH:=$(LOCAL_BIN):$(PATH)
 APP_NAME:="alerton"
-VERSION:="0.0.8"
+VERSION:="0.0.9"
 ARCH:="amd64"
 BUILD_DIR:=$(APP_NAME)_$(VERSION)_$(ARCH)
 

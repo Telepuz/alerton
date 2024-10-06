@@ -9,14 +9,12 @@ import (
 )
 
 type Config struct {
-	Hostname         string        `yaml:"hostname"`
-	CheckInterval    time.Duration `yaml:"check_interval"`
-	Logger           Logger        `yaml:"logger"`
-	CooldownDuration time.Duration `yaml:"cooldown_duration"`
-	AlertTimeout     time.Duration `yaml:"alert_timeout"`
-	TelegramToken    string        `yaml:"telegram_token"`
-	TelegramChatid   int64         `yaml:"telegram_chatid"`
-	Alerts           []Alert       `yaml:"alerts"`
+	Hostname      string        `yaml:"hostname"`
+	CheckInterval time.Duration `yaml:"check_interval"`
+	Logger        Logger        `yaml:"logger"`
+	Messenger     Messenger     `yaml:"messenger"`
+	Storage       Storage       `yaml:"storage"`
+	Alerts        []Alert       `yaml:"alerts"`
 }
 
 type Alert struct {
@@ -29,6 +27,17 @@ type Alert struct {
 type Logger struct {
 	Format string `yaml:"format"`
 	Level  string `yaml:"level"`
+}
+
+type Messenger struct {
+	Type   string `yaml:"type"`
+	Token  string `yaml:"token"`
+	ChatID int64  `yaml:"chatid"`
+}
+
+type Storage struct {
+	Type             string        `yaml:"type"`
+	CooldownDuration time.Duration `yaml:"cooldown_duration"`
 }
 
 func NewConfig(configFile string) (*Config, error) {

@@ -7,6 +7,8 @@ import (
 	"io"
 	"log/slog"
 	"net/http"
+
+	"github.com/telepuz/alerton/internal/config"
 )
 
 type Telegram struct {
@@ -22,15 +24,15 @@ type Message struct {
 	Text                string `json:"text"`
 }
 
-func NewTelegram(token string, chatID int64) (*Telegram, error) {
+func NewTelegram(cfg *config.Messenger) (*Telegram, error) {
 	slog.Debug(fmt.Sprintf(
 		"NewTelegram(): Created new telegram-messenger: Token - %s, ChatID - %d",
-		token,
-		chatID,
+		cfg.Token,
+		cfg.ChatID,
 	))
 	return &Telegram{
-			Token:  token,
-			ChatID: chatID,
+			Token:  cfg.Token,
+			ChatID: cfg.ChatID,
 		},
 		nil
 }

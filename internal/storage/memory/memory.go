@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log/slog"
 	"time"
+
+	"github.com/telepuz/alerton/internal/config"
 )
 
 type Alert struct {
@@ -16,13 +18,13 @@ type Memory struct {
 	Alerts           []Alert
 }
 
-func NewMemoryStorage(cooldownDuration time.Duration) *Memory {
+func NewMemoryStorage(cfg *config.Storage) *Memory {
 	slog.Debug(fmt.Sprintf(
 		"NewMemoryStorage(): Created new memory storage. Default cooldown - %v seconds",
-		cooldownDuration.Seconds(),
+		cfg.CooldownDuration.Seconds(),
 	))
 	return &Memory{
-		CooldownDuration: cooldownDuration,
+		CooldownDuration: cfg.CooldownDuration,
 	}
 }
 
