@@ -9,15 +9,22 @@ function ok {
 }
 
 function alertMessage {
-    echo "Host has killed processes by OOM"
+    LOG="$1"
+    echo "Host has killed processes by OOM: $LOG"
     exit 0
 }
 
+function checkDmesg() {
+    dmesg --since="$(date +'%Y-%m-%d %H:%M' -d '16 min ago')" -T \
+        | egrep -i 'killed process'
+}
+
 function main {
-    if [ -z "$(dmesg -T | egrep -i 'killed process')" ]; then
+    MESSAGE=$(checkDmesg)
+    if [ -z "$MESSAGE" ]; then
         ok
     fi
-    alertMessage
+    alertMessage "$MESSAGE"
 }
 main "$@"
 exit 0
