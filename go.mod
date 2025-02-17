@@ -1,6 +1,6 @@
 module github.com/telepuz/alerton
 
-go 1.20
+go 1.24
 
 require github.com/ilyakaznacheev/cleanenv v1.4.2
 
